@@ -74,6 +74,8 @@ if (!class_exists('VNPAYResponse')) {
                             $order->add_order_note(__($transStatus, 'woo-vnpay'));
                             $woocommerce->cart->empty_cart();
                             $url = wc_get_checkout_url() . 'order-received/' . $order->get_id() . '/?key=' . $order->order_key . '&' . $hashData . '&vnp_SecureHash=' . $vnp_SecureHash;
+                            $url = apply_filters('nextmove_redirect_properly', $url, $order->id, $order->order_key);
+                            $url = $url . '&' . $hashData . '&vnp_SecureHash=' . $vnp_SecureHash;
                             wp_redirect($url);
 
                         } else {
@@ -84,6 +86,8 @@ if (!class_exists('VNPAYResponse')) {
                             $order->update_status('failed');
                             $woocommerce->cart->empty_cart();
                             $url = wc_get_checkout_url() . 'order-received/' . $order->get_id() . '/?key=' . $order->order_key . '&' . $hashData . '&vnp_SecureHash=' . $vnp_SecureHash;
+                            $url = apply_filters('nextmove_redirect_properly', $url, $order->id, $order->order_key);
+                            $url = $url . '&' . $hashData . '&vnp_SecureHash=' . $vnp_SecureHash;
                             wp_redirect($url);
                         }
                     } else {
@@ -93,6 +97,8 @@ if (!class_exists('VNPAYResponse')) {
                         $order->add_order_note(__('Order already confirmed ', 'woo-vnpay'));
                         $woocommerce->cart->empty_cart();
                         $url = wc_get_checkout_url() . 'order-received/' . $order->get_id() . '/?key=' . $order->order_key . '&' . $hashData . '&vnp_SecureHash=' . $vnp_SecureHash;
+                        $url = apply_filters('nextmove_redirect_properly', $url, $order->id, $order->order_key);
+                        $url = $url . '&' . $hashData . '&vnp_SecureHash=' . $vnp_SecureHash;
                         wp_redirect($url);
                     }
                 } else {
@@ -103,6 +109,8 @@ if (!class_exists('VNPAYResponse')) {
                     $order->add_order_note(__('Chu ky khong hop le', 'woo-vnpay'));
                     $woocommerce->cart->empty_cart();
                     $url = wc_get_checkout_url() . 'order-received/' . $order->get_id() . '/?key=' . $order->order_key . '&' . $hashData . '&vnp_SecureHash=' . $vnp_SecureHash;
+                    $url = apply_filters('nextmove_redirect_properly', $url, $order->id, $order->order_key);
+                    $url = $url . '&' . $hashData . '&vnp_SecureHash=' . $vnp_SecureHash;
                     wp_redirect($url);
                 }
             } else {
@@ -112,6 +120,8 @@ if (!class_exists('VNPAYResponse')) {
                 $order->add_order_note(__('Order not found', 'woo-vnpay'));
                 $woocommerce->cart->empty_cart();
                 $url = wc_get_checkout_url() . 'order-received/' . $order->get_id() . '/?key=' . $order->order_key . '&' . $hashData . '&vnp_SecureHash=' . $vnp_SecureHash;
+                $url = apply_filters('nextmove_redirect_properly', $url, $order->id, $order->order_key);
+                $url = $url . '&' . $hashData . '&vnp_SecureHash=' . $vnp_SecureHash;
                 wp_redirect($url);
             }
             echo json_encode($returnData);
